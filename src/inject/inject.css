@@ -1,0 +1,247 @@
+#thirsttFrame {
+	width: 100%;
+	z-index:2147483635; 
+	position:absolute; 
+	top: 0px;
+	left: 0px;
+	box-shadow: 3px 3px 5px  #bdbdbd; 
+	background-color: #ffffff;
+	margin: 0px;
+	padding-bottom: 200px;
+
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: all 0.2s ease;
+  	-moz-transition: all 0.2s ease;
+  	-ms-transition: all 0.2s ease;
+  	-o-transition: all 0.2s ease;
+  	transition: all 0.2s ease;
+}
+
+	#thirsttFrame.on {
+		visibility: visible;
+		opacity: 1.0;
+	}
+
+#closeBtn_thirstt {
+	float: right;
+	margin: 20px 30px 0px 0px;
+	font-weight: bold;
+	opacity: 0.6;
+}
+
+#closeBtn_thirstt:hover {
+	opacity: 0.8;
+	cursor: default;
+}
+
+#articleContent {
+	margin-top: 30px;
+	margin: 0px;
+	font-family: Georgia, 'Times New Roman', serif;
+	font-size: 1.3rem;
+	line-height:200%
+}
+
+	#articleContent a {
+		color: #018f76;
+	}
+
+	#articleContent blockquote {
+		font-style: italic;
+		background-color: #007662;
+	}
+
+	#articleContent p{
+		background-color: #007662;
+		padding-right: 80px;
+	}
+
+	.paraActive{
+		border: 4px solid red;
+	}
+
+#articleTitle {
+	width: 90%;
+	font-weight: bold;
+	font-size: 2rem;
+	border-bottom: 1px solid #d2d2d2;
+	padding-bottom: 20px;
+	margin-bottom: 30px;
+}
+
+#loading {
+	font-size: 1.2rem;
+	padding-left: 20px;
+	padding-top: 12px;
+	margin-top: 20px;
+	margin-left: 10px;
+	float: left;
+	width: 60%;
+	-webkit-transition: all 0.2s ease;
+  	-moz-transition: all 0.2s ease;
+  	-ms-transition: all 0.2s ease;
+  	-o-transition: all 0.2s ease;
+  	transition: all 0.2s ease;
+
+  opacity: 0.7;
+}
+	#loading.inactive {
+	  opacity: 0.0;
+	}
+
+
+#logo {
+	float: left;
+	height: 50px;
+	width: 50px;
+	margin: 20px 0px 0px 40px;
+}
+
+#article{
+	margin: 50px auto 40px auto;
+	padding-top: 60px;
+	padding-bottom: 20px;
+	width: 70%;
+
+	-webkit-box-sizing: border-box;
+
+	z-index:2147483636; 
+	font-family: Georgia,"Times New Roman",serif;
+
+	webkit-transition: all 0.3s ease;
+  	-moz-transition: all 0.3s ease;
+  	-ms-transition: all 0.3s ease;
+  	-o-transition: all 0.3s ease;
+  	transition: all 0.3s ease;
+
+  opacity: 0.0;
+  visibility: hidden;
+  height: 0px;
+
+  border-bottom: 2px solid #bdbdbd;
+}
+	
+	#article.active{
+		opacity: 1.0;
+		height: auto;
+		visibility: visible;
+		margin-bottom: 100px;
+	}
+
+#clipper{
+	background-color: #ffffff;
+	box-shadow: -1px 1px 11px 0px #bdbdbd;
+	padding: 10px 15px 10px 15px;
+	z-index:2147483637; 
+	position: fixed;
+	margin: 0px;
+	webkit-transition: all 0.2s ease;
+  	-moz-transition: all 0.2s ease;
+  	-ms-transition: all 0.2s ease;
+  	-o-transition: all 0.2s ease;
+  	transition: all 0.2s ease;
+
+  	font-weight: 600;
+  	opacity: 0.0;
+  	font-size: 0.9rem;
+}
+	
+	#clipper.active{
+		opacity: 0.8;
+	}
+
+	#clipper.active:hover{
+		opacity: 1.0;
+		cursor: default;
+	}
+
+#paraClipper{
+	background-color: #ffffff;
+	box-shadow: -1px 1px 11px 0px #bdbdbd;
+	padding: 10px 15px 10px 15px;
+	z-index:2147483637; 
+	position: fixed;
+	margin: 0px;
+
+	webkit-transition: all 0.2s ease;
+  	transition: all 0.2s ease;
+
+  	font-weight: 600;
+  	opacity: 0.0;
+  	font-size: 0.9rem;	
+}
+
+	#paraClipper.active{
+		opacity: 1.0
+	}
+
+	#paraClipper.active:hover{
+		color: #00a185;
+	}
+
+#login{
+	margin-left: 60px;
+	opacity: 0.0;
+	visibility: hidden;
+	z-index:2147483637;
+	webkit-transition: all 0.2s ease;
+  	-moz-transition: all 0.2s ease;
+  	-ms-transition: all 0.2s ease;
+  	-o-transition: all 0.2s ease;
+  	transition: all 0.2s ease;
+}
+
+	#login.active{
+		opacity: 1.0;
+		visibility: visible;
+	}
+
+#inputPassword{
+	margin-left: 10px;
+}
+
+#loginBtn{
+	padding: 10px;
+	background-color: #00bd9c;
+	box-shadow: 2px 2px 2px #bdbdbd;
+	width: 100px;
+	margin-top: 10px;
+	text-align: center;
+
+	color: white;
+
+	webkit-transition: all 0.2s ease;
+  	-moz-transition: all 0.2s ease;
+  	-ms-transition: all 0.2s ease;
+  	-o-transition: all 0.2s ease;
+  	transition: all 0.2s ease;
+}
+
+	#loginBtn:hover{
+	background-color: #00a185;
+	cursor: default;
+	}
+
+#register{
+	margin-top: 20px;
+}
+	
+#registerLink{
+	margin-top: 10px;
+	color: #00bd9c;
+	webkit-transition: all 0.2s ease;
+	font-weight: bold;
+}
+
+#registerLink:hover{
+	color: #00a185;
+	cursor: default;
+}
+
+#articleContent ::selection{
+	color: #00bd9c;
+	background-color: #ffffff;
+	border: 1px solid black;
+}
+
