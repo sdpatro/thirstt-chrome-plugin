@@ -75,13 +75,7 @@ document.body.appendChild(iframe_thirstt);   // Adding the frame to the body
 // Clipper tool
 var clipper = document.createElement("div");
 clipper.setAttribute("id","clipper");
-clipper.innerHTML = "Clip Text";
-
-// Clip Para 
-var paraClipper = document.createElement("div");
-paraClipper.setAttribute("id","paraClipper");
-paraClipper.innerHTML = "Clip Para";
-
+clipper.innerText = "Clip";
 
 
 iframe_thirstt.appendChild(logo);         // Adding the logo
@@ -89,7 +83,6 @@ iframe_thirstt.appendChild(loading);      // Adding the loading text
 iframe_thirstt.appendChild(closeBtn);     // Adding the close button to frame
 iframe_thirstt.appendChild(article);      // Adding the article
 document.body.appendChild(clipper);      // Adding the clipper
-document.body.appendChild(paraClipper);  // Adding the para clipper
 
 // Adding the article content                          
 article.appendChild(articleTitle);
@@ -113,7 +106,7 @@ function turnOff()
 } 
 
 // Show clipper
-function showClipper(posX,posY)
+function showClipper(posX,posY,type)
 {
   clipper.style.left= posX + "px";
   clipper.style.top= posY + "px";
@@ -122,7 +115,7 @@ function showClipper(posX,posY)
 
 
 // All click events
-document.getElementById("thirsttFrame").onclick = function(e){
+document.body.onclick = function(e){
 
   if(e.toElement.id == "closeBtn_thirstt")
     turnOff();
@@ -130,40 +123,63 @@ document.getElementById("thirsttFrame").onclick = function(e){
   if(e.toElement.id == "registerLink")
     registerWindow();
 
+  if(e.toElement.id == "clipper")
+  {
+    if(selection)
+    {
+      console.log(selection.toString());
+      selection = undefined;
+      clipper.innerText = "Clip"
+    }
+      
+    else
+      console.log(para);
+  }  
+
 }
 
+
 // Mouse move events
-document.getElementById("articleContent").onmousemove = function(e){
-
-  var hoverElement = e.toElement;
-
-  paraClipper.className = "active";
-
-  if(hoverElement.tagName == "P")
+document.getElementById("articleContent").onmouseover = function(e) {
+  
+  var tag = e.toElement.tagName;
+  
+  if(tag == 'P' || tag == 'IMG' || tag == "A" || tag == "BLOCKQUOTE" || tag == "IFRAME")
   {
-    paraClipper.style.left = e.clientX + "px";
-    paraClipper.style.top = e.clientY + "px";
+    
+    e.toElement.style.border = "2px solid #ffffff";  
+
+    var rect = e.toElement.getBoundingClientRect();
+    showClipper(rect.right - 65, rect.top + 5);
   }
 }
 
-// Clipper functionality
-document.getElementById("clipper").onclick = function(e){
-  console.log(range);
+document.getElementById("clipper").onmouseover = function(e) {
+
+  var tag = e.fromElement.tagName;
+  console.log(selection);
+
+  if(selection==undefined)
+  {
+    if(e.toElement.id == "clipper" && (tag == 'P' || tag == 'IMG' || tag == "A" || tag == "BLOCKQUOTE" || tag == "IFRAME"))
+    {
+      para = e.fromElement;
+      para.style.border = "2px dotted #00bd9c";
+    }
+  }
+
 }
-
-
+// Selection event
 document.getElementById("thirsttFrame").onmouseup = function(e){
-
-  selection =  window.getSelection();
 
   if(window.getSelection().type == "Range")
   {
-    showClipper(e.clientX,e.clientY);
-    
+    clipper.innerText = "Clip Text"
+    selection = window.getSelection().toString();
   }
 
   else
-    clipper.className = "inactive";
+    clipper.innerText = "Clip";
 }
 
 
