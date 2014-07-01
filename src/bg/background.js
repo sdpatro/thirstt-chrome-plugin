@@ -85,7 +85,7 @@ xhr_sendClip.onreadystatechange = function() {
   var status;	
 
   if (xhr_sendClip.readyState == 4 && xhr_sendClip.status == 200)
-  	status = "succcess";
+  	status = "success";
   else if (xhr_sendClip.readyState == 4 && xhr_sendClip.status == 404)
   	status = "failure";
 

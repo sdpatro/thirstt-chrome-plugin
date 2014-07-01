@@ -323,16 +323,16 @@ chrome.runtime.onMessage.addListener(
       loading.className = "inactive";
     }
 
+/*#00bd9c*/
     if(request.clipSuccess)
     {
 
       if(clipStatus_context.className != "active")
       { 
-        clipStatus.style.color = "#5c5c5c";
-
         if(request.clipSuccess == "success")
         {
-          clipStatus.innertext = "Done";
+          clipStatus.style.color = "#00bd9c";
+          clipStatus.innerText = "Done";
         }
 
         else
@@ -340,7 +340,7 @@ chrome.runtime.onMessage.addListener(
 
         setTimeout(function(){
           clipStatus.className = "inactive";
-          clipStatus.style.color = "#8f8f8f";
+          clipStatus.style.color = "#5c5c5c";
         },3000);
       }
 
@@ -348,7 +348,8 @@ chrome.runtime.onMessage.addListener(
       {
         if(request.clipSuccess == "success")
         {
-          contextText.innertext = "Done";
+          contextText.style.color = "#00bd9c";
+          contextText.innerText = "Done";
         }
 
         else
@@ -356,6 +357,7 @@ chrome.runtime.onMessage.addListener(
 
         setTimeout(function(){
           clipStatus_context.className = "inactive";
+          contextText.style.color = "#5c5c5c";
         },3000);
 
       }
