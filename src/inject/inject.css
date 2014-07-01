@@ -30,10 +30,10 @@
 	opacity: 0.6;
 }
 
-#closeBtn_thirstt:hover {
-	opacity: 0.8;
-	cursor: default;
-}
+	#closeBtn_thirstt:hover {
+		opacity: 0.8;
+		cursor: default;
+	}
 
 #articleContent {
 	margin-top: 30px;
@@ -47,24 +47,18 @@
 	transition: all 0.2s ease;
 }
 	
-	#articleContent p, #articleContent a, #articleContent blockquote, #articleContent img{
+	#articleContent p, #articleContent a, #articleContent img, #articleContent iframe{
 		font-family: Georgia, 'Times New Roman', serif;
 		font-size: 1.3rem;
-		padding: 0px 100px 0px 5px;
-		border: 2px solid #ffffff; 
+		padding: 5px 60px 5px 5px;
+		border: 2px dashed #ffffff; 
+		-webkit-transition: all 0.2s ease;
+		transition: all 0.2s ease;
 	}
 
 	#articleContent a {
 		color: #018f76;
-	}
-
-	#articleContent blockquote {
-		font-style: italic;
-		background-color: #dfdfdf;
-	}
-
-	.paraActive{
-		border: 4px solid red;
+		padding: 0px;
 	}
 
 #articleTitle {
@@ -97,14 +91,14 @@
 	}
 
 
-#logo {
+#logoThirstt {
 	float: left;
 	height: 50px;
 	width: 50px;
 	margin: 20px 0px 0px 40px;
 }
 
-#article{
+#article_t{
 	margin: 50px auto 40px auto;
 	padding: 60px 10px 20px 10px;
 	width: 70%;
@@ -127,7 +121,7 @@
   border-bottom: 2px solid #bdbdbd;
 }
 	
-	#article.active{
+	#article_t.active{
 		opacity: 1.0;
 		height: auto;
 		visibility: visible;
@@ -135,28 +129,41 @@
 	}
 
 #clipper{
-	background-color: #ffffff;
-	padding: 5px 15px 5px 15px;
+	padding: 0px;
 	z-index:2147483637; 
 	position: fixed;
 	margin: 0px;
 	webkit-transition: all 0.2s ease;
   	transition: all 0.2s ease;
-  	border: 2px dotted #00bd9c; 
+
+  	height: 30px;
+  	width: 30px;
+
+  	background-image:url('http://icons.iconarchive.com/icons/visualpharm/icons8-metro-style/512/Rock-Paper-Scissors-Scissors-icon.png');
+  	background-repeat:no-repeat;
+  	background-position: center; 
+  	background-size: 25px 25px;
 
   	font-weight: 600;
   	opacity: 0.0;
   	font-size: 0.9rem;
+  	cursor: default;
+
+  	visibility: hidden;
 }
 	
 	#clipper.active{
-		opacity: 0.8;
+		opacity: 0.7;
+		visibility: visible;
 	}
 
-	#clipper.active:hover{
+	#clipper.scrolled{
+		opacity: 0.2;
+		visibility: visible;
+	}
+
+	#clipper.active:hover, #clipper.scrolled:hover{
 		opacity: 1.0;
-		cursor: default;
-		border: 2px dotted #ffffff; 
 	}
 
 #login{
@@ -224,4 +231,90 @@
 	border: 1px solid black;
 }
 
+#clipIcon {
+	height: 25px;
+	width: 25px;
+}
 
+#articleContent p.highlighted, #articleContent a.highlighted, #articleContent img.highlighted, #articleContent iframe.highlighted{
+	border: 2px dashed #00bd9c;
+}
+
+#clipStatus {
+	position: relative;
+	left: 30px;
+	background-color: #ffffff;
+	height: auto;
+	min-width: 200px;
+	overflow: hidden;
+	text-align: center;
+	font-family: Helvetica, Verdana;
+	box-shadow: 3px 3px 5px  #bdbdbd;
+	color: #8f8f8f;
+
+	padding: 10px;
+	opacity: 0.0;
+	webkit-transition: all 0.2s ease;
+  	-moz-transition: all 0.2s ease;
+  	-ms-transition: all 0.2s ease;
+  	-o-transition: all 0.2s ease;
+  	transition: all 0.2s ease;
+
+  	font-weight: bold;
+}
+
+	#clipStatus.active {
+		opacity: 1.0;
+	}
+
+#clipStatus_context {
+    position: fixed;
+    background-color: #ffffff;
+    height: auto;
+    width: 350px;
+    overflow: hidden;
+    font-family: Helvetica, Verdana;
+    box-shadow: 0px 0px 10px  #bdbdbd;
+    color: #8f8f8f;
+    right: 30px;
+    top: 30px;
+
+    z-index:2147483637; 
+
+    padding: 15px;
+    padding-bottom: 20px;
+    opacity: 0.0;
+    visibility: hidden;
+
+    webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+    #clipStatus_context.active {
+        opacity: 1.0;
+        visibility: visible;
+    }
+
+    #logoThirsttContext {
+        float: left;
+        height: 40px;
+        width: 40px;
+        margin: 8px 0px 0px 10px;
+    }
+
+    #contextText {
+        font-family: Helvetica, Verdana;
+        font-weight: bold;
+        color: #8f8f8f;
+        float: left;
+        margin: 18px 0px 0px 15px;
+    }
+
+    #contextContent {
+        font-family: Helvetica, Verdana;
+        color: #00bd9c; 
+        margin-top: 70px;
+        border: 2px dashed #00bd9c;
+        padding: 10px;
+        overflow: hidden;
+    }
