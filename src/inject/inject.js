@@ -1,22 +1,22 @@
 var selection;
 var selectionNodeArray;
+var element;
 
 // Main frame attributes
 var iframe_thirstt = document.createElement("div");
 iframe_thirstt.setAttribute("id","thirsttFrame")
-//iframe_thirstt.setAttribute("scrolling", "no");
 iframe_thirstt.setAttribute("frameborder", "0");
 iframe_thirstt.className = "off";
 document.body.appendChild(iframe_thirstt);   // Adding the frame to the body
 
   // Logo
   var logo = document.createElement("img");
-  logo.setAttribute("id","logo");
+  logo.setAttribute("id","logoThirstt");
   logo.setAttribute("src","https://www.thirstt.com/images/logos/logoLanding.png");
 
   // Summary article
   var article = document.createElement("div");
-  article.setAttribute("id","article")
+  article.setAttribute("id","article_t")
 
   //Article Content
   var articleContent = document.createElement("div");
@@ -75,21 +75,43 @@ document.body.appendChild(iframe_thirstt);   // Adding the frame to the body
 // Clipper tool
 var clipper = document.createElement("div");
 clipper.setAttribute("id","clipper");
-clipper.innerHTML = "Clip Text";
+clipper.className = "inactive";
 
-// Clip Para 
-var paraClipper = document.createElement("div");
-paraClipper.setAttribute("id","paraClipper");
-paraClipper.innerHTML = "Clip Para";
+// Clip send status
+var clipStatus = document.createElement("div");
+clipStatus.setAttribute("id","clipStatus");
+clipStatus.innerText = "";
 
+// Clip send status_context
+var clipStatus_context = document.createElement("div");
+clipStatus_context.setAttribute("id","clipStatus_context");
 
+  // Context status logo
+  var logoContext = document.createElement("img");
+  logoContext.setAttribute("id","logoThirsttContext");
+  logoContext.setAttribute("src","https://www.thirstt.com/images/logos/logoLanding.png");
+  clipStatus_context.appendChild(logoContext);
+
+  // Context status text
+  var contextText = document.createElement("div");
+  contextText.setAttribute("id","contextText");
+  contextText.innerText = "Template";
+  clipStatus_context.appendChild(contextText);
+
+  // Context content 
+  var contextContent = document.createElement("div");
+  contextContent.setAttribute("id","contextContent");
+  contextContent.innerText = "Template";
+  clipStatus_context.appendChild(contextContent);
 
 iframe_thirstt.appendChild(logo);         // Adding the logo
 iframe_thirstt.appendChild(loading);      // Adding the loading text
 iframe_thirstt.appendChild(closeBtn);     // Adding the close button to frame
 iframe_thirstt.appendChild(article);      // Adding the article
+clipper.appendChild(clipStatus);          // Adding the clip status message to the clipper
 document.body.appendChild(clipper);      // Adding the clipper
-document.body.appendChild(paraClipper);  // Adding the para clipper
+document.body.appendChild(clipStatus_context);  // Adding the context clipping status.
+
 
 // Adding the article content                          
 article.appendChild(articleTitle);
@@ -107,6 +129,7 @@ function turnOff()
   iframe_thirstt.className = "off";
   article.className = "inactive";
   login.className = "inactive";
+  clipper.className = "inactive";
   
   setTimeout(function(){loading.className = "active";},200);
   
@@ -115,55 +138,112 @@ function turnOff()
 // Show clipper
 function showClipper(posX,posY)
 {
-  clipper.style.left= posX + "px";
-  clipper.style.top= posY + "px";
-  clipper.className = "active";
+  if(thirsttFrame.className == "on")
+  {   
+    clipper.style.left= posX + "px";
+    clipper.style.top= posY + "px";
+    clipper.className = "active";
+  }
 }
 
 
 // All click events
-document.getElementById("thirsttFrame").onclick = function(e){
-
-  if(e.toElement.id == "closeBtn_thirstt")
-    turnOff();
-
-  if(e.toElement.id == "registerLink")
-    registerWindow();
-
-}
-
-// Mouse move events
-document.getElementById("articleContent").onmousemove = function(e){
-
-  var hoverElement = e.toElement;
-
-  paraClipper.className = "active";
-
-  if(hoverElement.tagName == "P")
-  {
-    paraClipper.style.left = e.clientX + "px";
-    paraClipper.style.top = e.clientY + "px";
-  }
-}
-
-// Clipper functionality
-document.getElementById("clipper").onclick = function(e){
-  console.log(range);
-}
-
-
-document.getElementById("thirsttFrame").onmouseup = function(e){
-
-  selection =  window.getSelection();
+document.body.onclick = function(e){
 
   if(window.getSelection().type == "Range")
   {
-    showClipper(e.clientX,e.clientY);
-    
+    showClipper(e.clientX - 30, e.clientY - 40);    
+    selection = window.getSelection().toString();
   }
 
-  else
-    clipper.className = "inactive";
+  else 
+  {
+    if(e.toElement.id == "closeBtn_thirstt")
+    turnOff();
+
+    if(e.toElement.id == "registerLink")
+      registerWindow();
+
+    if(e.toElement.id == "clipper")
+    {
+      if(selection)
+      {
+        console.log(selection.toString());
+        sendToBackground(selection.toString());
+      }
+        
+      else
+      {
+        console.log(element);
+        sendToBackground(element.outerHTML);
+      }
+
+      clipStatus.innerText = "Saving to your tClip.." ;
+      clipStatus.className = "active";
+    }    
+
+    selection = undefined;
+  }
+  
+}
+
+
+function sendToBackground(clipContent)
+{
+  chrome.runtime.sendMessage({
+    "content" : clipContent,
+    "src" : document.URL
+  },function(){});
+}
+
+// Mouse move events
+document.getElementById("article_t").onmouseover = function(e) {
+  
+  var tag = e.toElement.tagName;
+
+  if((tag == "P" || tag == "IMG" || tag == "A" || tag == "IFRAME") && (selection==undefined))
+  {
+    element = e.toElement;
+    e.toElement.className = "";
+
+    var rect = e.toElement.getBoundingClientRect();
+    var halfHeight = Math.ceil(rect.top + e.toElement.offsetHeight/2);
+
+    if(tag!="A")
+    {if((e.clientY <= halfHeight) || (rect.bottom > window.innerHeight) )
+        showClipper(rect.right - 45, rect.top + 5);
+    
+        else 
+        showClipper(rect.right - 45, rect.bottom - 50);      }
+
+    else
+      showClipper(rect.right - 10, rect.top-10);
+  }
+}
+
+document.getElementById("clipper").onmouseover = function(e) {
+
+  if(selection==undefined)
+    element.className = "highlighted";
+}
+
+document.getElementById("clipper").onmouseout = function(e) {
+  element.className = "";
+}
+
+// Selection event
+document.getElementById("thirsttFrame").onmouseup = function(e){
+
+  
+}
+
+window.onscroll = function(e) {
+  if(thirsttFrame.className == "on") {
+    clipper.className ="scrolled";
+    setTimeout(function(){
+      clipper.className ="active";
+    },1000);
+  }
 }
 
 
@@ -183,8 +263,6 @@ function scrollToTop()
 // because the frame gets activated when inject.js receives a message from background.js
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
-
-    console.log(request);
 
     if(request.turnOn == true)      // Turn the overlay On or Off
     {
@@ -213,7 +291,7 @@ chrome.runtime.onMessage.addListener(
 
       loading.className = "inactive";
       setTimeout(function(){
-        loading.innerText = "Please login to continue..."
+        loading.innerText = "Please login to continue"
       },200);
       setTimeout(function(){
         loading.className = "active";
@@ -236,6 +314,7 @@ chrome.runtime.onMessage.addListener(
     }
     else if(request.reqLogin == false)    // Filling up the content, for logged in users only.
     {
+      loading.innerText = "Loading..."
       articleTitle.innerHTML = request.title;
       articleContent.innerHTML = request.content;
       
@@ -244,7 +323,73 @@ chrome.runtime.onMessage.addListener(
       loading.className = "inactive";
     }
 
+/*#00bd9c*/
+    if(request.clipSuccess)
+    {
+
+      if(clipStatus_context.className != "active")
+      { 
+        if(request.clipSuccess == "success")
+        {
+          clipStatus.style.color = "#00bd9c";
+          clipStatus.innerText = "Done";
+        }
+
+        else
+          clipStatus.innerText = "Something went wrong...";
+
+        setTimeout(function(){
+          clipStatus.className = "inactive";
+          clipStatus.style.color = "#5c5c5c";
+        },3000);
+      }
+
+      else
+      {
+        if(request.clipSuccess == "success")
+        {
+          contextText.style.color = "#00bd9c";
+          contextText.innerText = "Done";
+        }
+
+        else
+          contextText.innerText = "Something went wrong...";
+
+        setTimeout(function(){
+          clipStatus_context.className = "inactive";
+          contextText.style.color = "#5c5c5c";
+        },3000);
+
+      }
+
+    }
+
+    if(request.contextClip)
+    {
+      clipStatus_context.className = "active";
+      contextText.innerText = "Adding to tClip"
+      contextContent.innerText = request.contextContent;
+
+      var contextImg = document.createElement("img");
+      contextImg.setAttribute("id","contextImg");
+
+      if(request.contentImage)
+        contextImg.style.display = "block";
+
+      else
+        contextImg.style.display = "none"; 
+
+
+      contextImg.setAttribute("src",request.contextContent);
+      contextContent.appendChild(contextImg);
+
+      sendToBackground(request.contextContent);
+    }
+
 });
 
 console.log("Inject.js injected..."); 
+
+
+
 

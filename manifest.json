@@ -21,7 +21,7 @@
     "default_title": "Clip to your tBook"
   },
   "permissions": [
-    "cookies","<all_urls>"
+    "cookies","<all_urls>","contextMenus"
   ],
   "content_scripts": [
     {
